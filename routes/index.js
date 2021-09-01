@@ -1,5 +1,9 @@
 const inquirer = require("inquirer");
 
+const wudup = () => {
+  console.log("wuduuup.");
+};
+
 // write function to kick off inquirer
 const init = () => {
   inquirer.prompt(questions).then(() => {
@@ -23,4 +27,5 @@ const questions = [
   },
 ];
 
-init();
+// init();
+module.exports = wudup;
