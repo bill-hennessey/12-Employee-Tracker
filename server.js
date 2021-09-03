@@ -1,9 +1,9 @@
 const express = require("express");
-const routes = require("./routes");
+// const routes = require("./routes");
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const { response } = require("express");
+// const { response } = require("express");
 
 // const sequelize = require("./config/connection");
 
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // turn on routes
-app.use(routes);
+// app.use(routes);
 
 const db = mysql.createConnection(
   {
@@ -71,6 +71,17 @@ const questionsInit = async () => {
     );
   }
   if (response.q1 === "Add an employee") {
+    const addEmp = await inquirer.prompt(questionAddEmp);
+    db.query(
+      "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?);",
+      [addEmp.q1, addEmp.q2, addEmp.q3, addEmp.q4],
+      (err, results) => {
+        console.log("results " + results);
+        questionsInit();
+      }
+    );
+  }
+  if (response.q1 === "Update an employee role") {
     const addEmp = await inquirer.prompt(questionAddEmp);
     db.query(
       "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?);",
